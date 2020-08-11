@@ -12,5 +12,6 @@ This is a light theme (with white bg).
 First, [install JetBrainsMono font](https://www.jetbrains.com/lp/mono/#how-to-install).
 
 Next, [install kitty](https://sw.kovidgoyal.net/kitty/binary.html).
+Remember following the "Desktop integration on Linux" guide.
 
 Finally, copy the file `kitty.conf` into `~/.config/kitty/`.
