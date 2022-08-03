@@ -105,8 +105,5 @@ export LD_LIBRARY_PATH=/usr/local/lib
 autoload -Uz compinit
 compinit
 
-export http_proxy=http://192.168.5.140:3128
-export https_proxy=http://192.168.5.140:3128
-
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
