@@ -74,10 +74,10 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# export MANPATH="/usr/local/man:$MANPATH"
+export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -87,7 +87,7 @@ source $ZSH/oh-my-zsh.sh
 # fi
 
 # Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+export ARCHFLAGS="-arch x86_64"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -101,9 +101,12 @@ source $ZSH/oh-my-zsh.sh
 # Added by the user
 export PATH=${PATH}:~/.local/bin
 export LD_LIBRARY_PATH=/usr/local/lib
-alias seecam='mplayer tv:// -tv driver=v4l2:width=1280:height=720:device=/dev/video0 > /dev/null 2> /dev/null'
 
 autoload -Uz compinit
 compinit
-# Completion for kitty
-kitty + complete setup zsh | source /dev/stdin
+
+export http_proxy=http://192.168.5.140:3128
+export https_proxy=http://192.168.5.140:3128
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
