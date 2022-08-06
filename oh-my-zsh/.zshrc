@@ -85,6 +85,7 @@ export LANG=en_US.UTF-8
 # else
 #   export EDITOR='mvim'
 # fi
+export EDITOR=vim
 
 # Compilation flags
 export ARCHFLAGS="-arch x86_64"
@@ -99,7 +100,7 @@ export ARCHFLAGS="-arch x86_64"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Added by the user
-export PATH=${PATH}:~/.local/bin
+export PATH=${PATH}:~/.local/bin:~/go/bin
 export LD_LIBRARY_PATH=/usr/local/lib
 
 autoload -Uz compinit
@@ -107,3 +108,8 @@ compinit
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+
+eval $(thefuck --alias)
+if command -v ngrok &>/dev/null; then
+  eval "$(ngrok completion)"
+fi
