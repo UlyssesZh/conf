@@ -118,6 +118,9 @@ if command -v cheat &>/dev/null; then
 	source scripts/cheat.zsh
 	cd
 fi
+if command -v tex &>/dev/null; then
+	alias tlmgr='/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode'
+fi
 
 autoload -Uz compinit
 compinit

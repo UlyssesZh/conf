@@ -1,9 +1,16 @@
 #!/usr/bin/sh
 
+# git
+git config --global user.email "UlyssesZhan@gmail.com"
+git config --global user.name "Ulysses Zhan"
+git config --global credential.helper store
+
 # oh-my-zsh
 if command -v zsh &>/dev/null; then
-	chsh -s $(which zsh)
-	sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+	if [ $SHELL != $(which zsh) ]; then
+		chsh -s $(which zsh)
+	fi
+	sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
 	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 	cp oh-my-zsh/ulyssesys.zsh-theme ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/
 	cp oh-my-zsh/.zshrc ~
@@ -31,11 +38,25 @@ if command -v tmux &>/dev/null; then
 fi
 
 # pip and gem packages
-if command -v pip3 &>/dev/null; then
-	pip3 install you-get youtube-dl spotdl scdl
-fi
-if command -v gem &>/dev/null; then
-	gem install jekyll rails iruby sciruby
+if [ $CHINA != "" ]; then
+	https_proxy_temp=$https_proxy
+	export https_proxy=
+	if command -v pip3 &>/dev/null; then
+		pip3 install you-get youtube-dl spotdl scdl -i https://pypi.tuna.tsinghua.edu.cn/simple
+	fi
+	if command -v gem &>/dev/null; then
+		gem sources --add https://mirrors.tuna.tsinghua.edu.cn/rubygems/ --remove https://rubygems.org/
+		gem install jekyll rails iruby sciruby
+		gem sources --add https://rubygems.org/ --remove https://mirrors.tuna.tsinghua.edu.cn/rubygems/
+	fi
+	export https_proxy=$https_proxy_temp
+else
+	if command -v pip3 &>/dev/null; then
+		pip3 install you-get youtube-dl spotdl scdl
+	fi
+	if command -v gem &>/dev/null; then
+		gem install jekyll rails iruby sciruby
+	fi
 fi
 
 # jupyter
@@ -51,4 +72,18 @@ if command -v jupyter &>/dev/null; then
 		git clone https://github.com/WolframResearch/WolframLanguageForJupyter.git ~/.local/WolframLanguageForJupyter
 		~/.local/WolframLanguageForJupyter/.configure-jupyter.wls add
 	fi
+fi
+
+# tlmgr
+if command -v tex &>/dev/null; then
+	alias tlmgr='/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode'
+	tlmgr init-usertree
+	if [ $CHINA != "" ]; then
+		export https_proxy=
+		tlmgr option repository https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/tlnet
+	else
+		tlmgr option repository https://mirrors.rit.edu/CTAN/systems/texlive/tlnet
+	fi
+	tlmgr install physics amsfonts amsmath cancel hyperref mathtools mhchem microtype tikz-cd ucs wasysym
+	tlmgr option repository https://mirrors.rit.edu/CTAN/systems/texlive/tlnet
 fi
