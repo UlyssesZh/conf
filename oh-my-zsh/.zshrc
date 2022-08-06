@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/`whoami`/.oh-my-zsh"
@@ -99,17 +99,25 @@ export ARCHFLAGS="-arch x86_64"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Added by the user
-export PATH=${PATH}:~/.local/bin:~/go/bin
 export LD_LIBRARY_PATH=/usr/local/lib
+
+if command -v go &>/dev/null; then
+	export PATH=${PATH}:~/go/bin
+fi
+if command -v rvm &>/dev/null; then
+	export PATH="$PATH:$HOME/.rvm/bin"
+fi
+if command -v thefuck &>/dev/null; then
+	eval $(thefuck --alias)
+fi
+if command -v ngrok &>/dev/null; then
+	eval $(ngrok completion)
+fi
+if command -v cheat &>/dev/null; then
+	cd ~/go/pkg/mod/github.com/cheat/*(-/n[-1])
+	source scripts/cheat.zsh
+	cd
+fi
 
 autoload -Uz compinit
 compinit
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-
-eval $(thefuck --alias)
-if command -v ngrok &>/dev/null; then
-  eval "$(ngrok completion)"
-fi

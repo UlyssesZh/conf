@@ -21,7 +21,7 @@ fi
 gpg2 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
 \curl -sSL https://get.rvm.io | bash -s stable
 source ~/.rvm/scripts/rvm
-rvm install 3.1.2
+~/.rvm/bin/rvm install 3.1.2
 
 # tmux
 if command -v tmux &>/dev/null; then
@@ -32,8 +32,7 @@ fi
 
 # pip and gem packages
 if command -v pip3 &>/dev/null; then
-	pip3 install --upgrade pip
-	pip3 install pandas numpy torch matplotlib jupyter you-get youtube-dl spotdl scdl
+	pip3 install you-get youtube-dl spotdl scdl
 fi
 if command -v gem &>/dev/null; then
 	gem install jekyll rails iruby sciruby
