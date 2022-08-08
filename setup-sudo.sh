@@ -21,6 +21,7 @@ pacman --needed --noconfirm -S gist fd locate unzip man openssh nginx biber
 pacman --needed --noconfirm -S tree python-pip cuda htop texlive-lang neofetch bluez
 pacman --needed --noconfirm -S bluez-utils nvidia fzf gnupg openssl texlive-bibtexextra
 pacman --needed --noconfirm -S the_silver_searcher cloc multitail texlive-fontsextra
+pacman --needed --noconfirm -S jupyter-notebook python-pytorch python-pandas
 
 # Install yay
 if [ $CHINA != "" ]; then
