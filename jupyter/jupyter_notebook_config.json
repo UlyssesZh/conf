@@ -1,0 +1,10 @@
+{
+	"ServerApp": {
+		"allow_remote_access": true,
+		"allow_root": true,
+		"ip": "0.0.0.0",
+		"notebook_dir": "/home/ulysses/notebooks",
+		"open_browser": false,
+		"token": ""
+	}
+}
