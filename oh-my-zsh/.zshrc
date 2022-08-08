@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$PATH
+#export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/`whoami`/.oh-my-zsh"
@@ -104,9 +104,6 @@ export LD_LIBRARY_PATH=/usr/local/lib
 if command -v go &>/dev/null; then
 	export PATH=${PATH}:~/go/bin
 fi
-if command -v rvm &>/dev/null; then
-	export PATH="$PATH:$HOME/.rvm/bin"
-fi
 if command -v thefuck &>/dev/null; then
 	eval $(thefuck --alias)
 fi
@@ -121,6 +118,8 @@ fi
 if command -v tex &>/dev/null; then
 	alias tlmgr='/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode'
 fi
-
 autoload -Uz compinit
 compinit
+if command -v rvm &>/dev/null; then
+	export PATH="$PATH:$HOME/.rvm/bin"
+fi

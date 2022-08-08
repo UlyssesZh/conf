@@ -23,34 +23,8 @@ pacman --needed --noconfirm -S bluez-utils nvidia fzf gnupg openssl texlive-bibt
 pacman --needed --noconfirm -S the_silver_searcher cloc multitail texlive-fontsextra
 pacman --needed --noconfirm -S jupyter-notebook python-pytorch python-pandas
 
-# Install yay
-if [ $CHINA != "" ]; then
-	export https_proxy=$https_proxy_temp
-fi
-if !( command -v yay &>/dev/null ); then
-	git clone https://aur.archlinux.org/yay.git
-	cd yay
-	su $SUDO_USER -c "makepkg -si"
-	cd ..
-	rm -rf yay
-fi
-
-# Install AUR packages
-su $SUDO_USER -c "yay --needed --noconfirm -S fpp icdiff cppman"
-
 # Fix tlmgr
 sed -i 's?\$Master = "\$Master/../..";?$Master = "$Master/../../..";?' /usr/share/texmf-dist/scripts/texlive/tlmgr.pl
 
 # Enable some services
 systemctl enable --now squid avahi-daemon bluetooth fstrim.timer
-
-# Install some pip for all users
-if [ $CHINA != "" ]; then
-	export https_proxy=
-	pip3 install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple
-	pip3 install pandas numpy torch matplotlib jupyter -i https://pypi.tuna.tsinghua.edu.cn/simple
-	export https_proxy=$https_proxy_temp
-else
-	pip3 install --upgrade pip
-	pip3 install pandas numpy torch matplotlib jupyter glances
-fi

@@ -1,9 +1,23 @@
 #!/usr/bin/sh
 
+https_proxy_temp=$https_proxy
+
 # git
 git config --global user.email "UlyssesZhan@gmail.com"
 git config --global user.name "Ulysses Zhan"
 git config --global credential.helper store
+
+# Install yay
+if !( command -v yay &>/dev/null ); then
+	git clone https://aur.archlinux.org/yay.git
+	cd yay
+	makepkg -si
+	cd ..
+	rm -rf yay
+fi
+
+# Install AUR packages
+yay --needed --noconfirm -S fpp icdiff cppman
 
 # oh-my-zsh
 if command -v zsh &>/dev/null; then
@@ -29,6 +43,7 @@ gpg2 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D69
 \curl -sSL https://get.rvm.io | bash -s stable
 source ~/.rvm/scripts/rvm
 ~/.rvm/bin/rvm install 3.1.2
+~/.rvm/bin/rvm use 3.1.2
 
 # tmux
 if command -v tmux &>/dev/null; then
@@ -39,7 +54,6 @@ fi
 
 # pip and gem packages
 if [ $CHINA != "" ]; then
-	https_proxy_temp=$https_proxy
 	export https_proxy=
 	if command -v pip3 &>/dev/null; then
 		pip3 install you-get youtube-dl spotdl scdl -i https://pypi.tuna.tsinghua.edu.cn/simple
@@ -63,7 +77,7 @@ fi
 if command -v jupyter &>/dev/null; then
 	mkdir -p ~/notebooks
 	mkdir -p ~/.jupyter
-	cp jupyter/jupyter_notebook_config.py ~/.jupyter
+	cp jupyter/jupyter_notebook_config.json ~/.jupyter
 	if command -v iruby &>/dev/null; then
 		iruby register --force
 	fi
@@ -76,14 +90,14 @@ fi
 
 # tlmgr
 if command -v tex &>/dev/null; then
-	alias tlmgr='/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode'
-	tlmgr init-usertree
+	/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode init-usertree
 	if [ $CHINA != "" ]; then
 		export https_proxy=
-		tlmgr option repository https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/tlnet
+		/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode option repository https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/tlnet
+		export https_proxy=$https_proxy_temp
 	else
-		tlmgr option repository https://mirrors.rit.edu/CTAN/systems/texlive/tlnet
+		/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode option repository https://mirrors.rit.edu/CTAN/systems/texlive/tlnet
 	fi
-	tlmgr install physics amsfonts amsmath cancel hyperref mathtools mhchem microtype tikz-cd ucs wasysym
-	tlmgr option repository https://mirrors.rit.edu/CTAN/systems/texlive/tlnet
+	/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode install physics amsfonts amsmath cancel hyperref mathtools mhchem microtype tikz-cd ucs wasysym
+	/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode option repository https://mirrors.rit.edu/CTAN/systems/texlive/tlnet
 fi
