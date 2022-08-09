@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-#export PATH=$HOME/bin:/usr/local/bin:$HOME/.local/bin:$PATH
+export PATH=$PATH:$HOME/bin:$HOME/.local/bin
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/`whoami`/.oh-my-zsh"
@@ -118,8 +118,9 @@ fi
 if command -v tex &>/dev/null; then
 	alias tlmgr='/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode'
 fi
+if command -v ip &>/dev/null; then
+	alias ip='ip -c'
+fi
 autoload -Uz compinit
 compinit
-if command -v rvm &>/dev/null; then
-	export PATH="$PATH:$HOME/.rvm/bin"
-fi
+export PATH="$PATH:$HOME/.rvm/bin"

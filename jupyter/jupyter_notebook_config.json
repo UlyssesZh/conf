@@ -1,5 +1,5 @@
 {
-	"ServerApp": {
+	"NotebookApp": {
 		"allow_remote_access": true,
 		"allow_root": true,
 		"ip": "0.0.0.0",
