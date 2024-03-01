@@ -3,14 +3,14 @@
 https_proxy_temp=$https_proxy
 
 # git
-if [ $GIT != "" ]; then
+if [ "$GIT" != "" ]; then
 git config --global user.email "UlyssesZhan@gmail.com"
 git config --global user.name "Ulysses Zhan"
 git config --global credential.helper store
 fi
 
 # Install yay
-if [ $YAY != "" ]; then
+if [ "$YAY" != "" ]; then
 if !( command -v yay &>/dev/null ); then
 	git clone https://aur.archlinux.org/yay-bin.git
 	cd yay
@@ -21,7 +21,7 @@ fi
 fi
 
 # oh-my-zsh
-if [ $ZSH != "" ]; then
+if [ "$OHMYZSH" != "" ]; then
 if command -v zsh &>/dev/null; then
 	if [ $SHELL != $(which zsh) ]; then
 		chsh -s $(which zsh)
@@ -34,7 +34,7 @@ fi
 fi
 
 # cheat
-if [ $CHEAT != "" ]; then
+if [ "$CHEAT" != "" ]; then
 if command -v cheat &>/dev/null; then
 	mkdir -p ~/.config/cheat/cheatsheets
 	cp cheat/conf.yml ~/.config/cheat/
@@ -43,7 +43,7 @@ fi
 fi
 
 # tmux
-if [ $TMUX != "" ]; then
+if [ "$TMUX" != "" ]; then
 if command -v tmux &>/dev/null; then
 	git clone https://github.com/gpakosz/.tmux.git ~/.tmux
 	ln -s -f ~/.tmux/.tmux.conf ~/.tmux.conf
@@ -52,7 +52,7 @@ fi
 fi
 
 # jupyter
-if [ $JUPYTER != "" ]; then
+if [ "$JUPYTER" != "" ]; then
 if command -v jupyter &>/dev/null; then
 	mkdir -p ~/notebooks
 	mkdir -p ~/.jupyter
@@ -69,10 +69,10 @@ fi
 fi
 
 # tlmgr
-if [ $TLMGR != "" ]; then
+if [ "$TLMGR" != "" ]; then
 if command -v tex &>/dev/null; then
 	/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode init-usertree
-	if [ $CHINA != "" ]; then
+	if [ "$CHINA" != "" ]; then
 		export https_proxy=
 		/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode option repository https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/tlnet
 		export https_proxy=$https_proxy_temp
