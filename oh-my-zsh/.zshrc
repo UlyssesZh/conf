@@ -39,7 +39,7 @@ command -v colormake &> /dev/null && alias make=colormake || true
 
 autoload -Uz compinit && compinit
 
-[ -f "/home/ulysses/.ghcup/env" ] && source "/home/ulysses/.ghcup/env" # ghcup-env
+[ -f "/home/ulysses/.ghcup/env" ] && source "/home/ulysses/.ghcup/env" || true # ghcup-env
 
 command -v doas &> /dev/null && alias sudo=doas || true
-command -v atuin &> /dev/null  && eval "$(atuin init zsh)"
+command -v atuin &> /dev/null  && eval "$(atuin init zsh)" || true
