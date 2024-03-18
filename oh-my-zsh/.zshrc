@@ -30,23 +30,16 @@ export EDITOR=vim
 
 # Added by the user
 #. ~/.local/share/rtx/plugins/go/set-env.zsh
-export PATH=$PATH:$HOME/.cabal/bin:$HOME/.local/bin
-[ -x "$(command -v mise)" ] && alias rtx=mise
-[ -x "$(command -v rtx)" ] && eval "$(rtx activate zsh)"
-
-[ -x "$(command -v thefuck)" ] && eval $(thefuck --alias)
-
-if [ -x "$(command -v ng)" ]; then
-	# Load Angular CLI autocompletion.
-	source <(ng completion script)
-fi
-
-[ -x "$(command -v colormake)" ] && alias make=colormake
+export PATH=$PATH:$HOME/.cabal/bin:$HOME/.local/bin:$HOME/scripts
+command -v mise &> /dev/null && alias rtx=mise || true
+command -v rtx &> /dev/null && eval "$(rtx activate zsh)" || true
+command -v thefuck &> /dev/null && eval "$(thefuck --alias)" || true
+command -v ng &> /dev/null && source <(ng completion script) || true
+command -v colormake &> /dev/null && alias make=colormake || true
 
 autoload -Uz compinit && compinit
 
 [ -f "/home/ulysses/.ghcup/env" ] && source "/home/ulysses/.ghcup/env" # ghcup-env
 
-[ -x "$(command -v doas)" ] && alias sudo=doas
-
-[ -x "$(command -v atuin)" ] && eval "$(atuin init zsh)"
+command -v doas &> /dev/null && alias sudo=doas || true
+command -v atuin &> /dev/null  && eval "$(atuin init zsh)"
