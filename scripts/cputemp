@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+Dir.glob '/sys/class/thermal/thermal_zone*' do |dirname|
+	next unless Dir.exist? dirname
+	type = File.read File.join dirname, 'type' rescue next
+        next unless type.chomp == 'x86_pkg_temp'
+	temp = File.read File.join dirname, 'temp' rescue exit
+        p temp.to_i/1000
+	exit
+end

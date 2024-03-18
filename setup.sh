@@ -2,6 +2,13 @@
 
 https_proxy_temp=$https_proxy
 
+# scripts
+if [ "$SCRIPTS" != "" ]; then
+	cp -r scripts $HOME
+	curl -o $HOME/scripts/peroutine -L https://github.com/UlyssesZh/peroutine/raw/master/peroutine
+	chmod +x $HOME/scripts/*
+fi
+
 # git
 if [ "$GIT" != "" ]; then
 git config --global user.email "UlyssesZhan@gmail.com"
@@ -43,7 +50,7 @@ fi
 fi
 
 # tmux
-if [ "$TMUX" != "" ]; then
+if [ "$OHMYTMUX" != "" ]; then
 if command -v tmux &>/dev/null; then
 	git clone https://github.com/gpakosz/.tmux.git ~/.tmux
 	ln -s -f ~/.tmux/.tmux.conf ~/.tmux.conf

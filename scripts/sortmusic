@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+IFS=$'\n'
+for f in *; do
+    #Skip directories
+    [ -d "$f" ] && continue
+    album=$(exiftool "$f" | grep -E 'Album\s+: .+' | sed -re 's/Album\s+:\s//')
+    mkdir -p "$album"
+    mv "$f" "$album"
+done
