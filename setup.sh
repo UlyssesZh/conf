@@ -31,7 +31,14 @@ fi
 if [ "$OHMYZSH" != "" ]; then
 if command -v zsh &>/dev/null; then
 	if [ $SHELL != $(which zsh) ]; then
-		chsh -s $(which zsh)
+		if [ "$TERMUX_VERSION" != "" ]; then
+			if ! command -v zsh &>/dev/null; then
+				pkg install zsh
+			fi
+			chsh -s zsh
+		else
+			chsh -s $(which zsh)
+		fi
 	fi
 	sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
 	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
@@ -61,9 +68,10 @@ fi
 # jupyter
 if [ "$JUPYTER" != "" ]; then
 if command -v jupyter &>/dev/null; then
-	mkdir -p ~/notebooks
-	mkdir -p ~/.jupyter
-	cp jupyter/jupyter_notebook_config.json ~/.jupyter
+	mkdir -p $HOME/pynb
+	mkdir -p $HOME/.jupyter
+	cp jupyter/jupyter_notebook_config.json $HOME/.jupyter
+	sed -i 's|/home/ulysses|$HOME|g' $HOME/.jupyter/jupyter_notebook_config.json
 	if command -v iruby &>/dev/null; then
 		iruby register --force
 	fi
@@ -88,5 +96,66 @@ if command -v tex &>/dev/null; then
 	fi
 	/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode install physics amsfonts amsmath cancel hyperref mathtools mhchem microtype tikz-cd ucs wasysym
 	/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode option repository https://mirrors.rit.edu/CTAN/systems/texlive/tlnet
+fi
+fi
+
+# rime
+if [ "$RIME" != "" ]; then
+mkdir -p $HOME/.local/bin $HOME/.local/share
+if [ "$TERMUX_VERSION" != "" ]; then
+	rime_dir=/storage/emulated/0/ulysses/trime
+else
+	rime_dir=$HOME/.config/ibus/rime
+fi
+if [ ! -d $rime_dir ]; then
+	mkdir -p $rime_dir
+fi
+echo "#!/usr/bin/env bash\ncd \$HOME/.local/share/plum\nrime_dir=$rime_dir ./rime-install \$@" > $HOME/.local/bin/rime-install
+chmod +x $HOME/.local/bin/rime-install
+git clone https://github.com/rime/plum.git $HOME/.local/share/plum
+rime_dir=$rime_dir rime-install --select :all UlyssesZh/rime-config/packages.conf
+curl -o $rime_dir/default.custom.yaml -L https://github.com/UlyssesZh/rime-config/raw/refs/heads/master/default.custom.yaml
+curl -o $rime_dir/luna_pinyin.custom.yaml -L https://github.com/UlyssesZh/rime-config/raw/refs/heads/master/luna_pinyin.custom.yaml
+if [ "$TERMUX_VERSION" != "" ]; then
+	curl -o $rime_dir/pc.trime.yaml -L https://github.com/UlyssesZh/rime-config/raw/refs/heads/master/pc.trime.yaml
+	curl -o $rime_dir/tongwenfeng.trime.custom.yaml -L https://github.com/UlyssesZh/rime-config/raw/refs/heads/master/tongwenfeng.trime.custom.yaml
+else
+	curl -o $rime_dir/ibus_rime.custom.yaml -L https://github.com/UlyssesZh/rime-config/raw/refs/heads/master/ibus_rime.custom.yaml
+fi
+fi
+
+# termux
+if [ "$TERMUX" != "" ] && [ "$TERMUX_VERSION" != "" ]; then
+termux-change-repo
+pkg upgrade
+pkg install git gh vim tree
+gh extension install vilmibm/gh-user-status
+if [ ! -d $HOME/storage ]; then
+	termux-setup-storage
+fi
+sed -i 's/#allow-external-apps = true/allow-external-apps = true/' $HOME/.termux/termux.properties
+curl -o $HOME/.termux/colors.properties -L https://github.com/termux/termux-styling/raw/refs/heads/master/app/src/main/assets/colors/base16-google-light.properties
+curl -o $HOME/.termux/font.ttf -L https://github.com/termux/termux-styling/raw/refs/heads/master/app/src/main/assets/fonts/JetBrains-Mono.ttf
+if ! command -v rish &>/dev/null && [ -d "/storage/emulated/0/ulysses/rish" ]; then
+	mkdir -p $HOME/.local/bin $HOME/.local/share/rish
+	install -m 700 /storage/emulated/0/ulysses/rish/rish $HOME/.local/bin/rish
+	install -m 400 /storage/emulated/0/ulysses/rish/rish_shizuku.dex $HOME/.local/share/rish/rish_shizuku.dex
+	sed -i 's|^BASEDIR=.*|BASEDIR=$HOME/.local/share/rish|' $HOME/.local/bin/rish
+fi
+fi
+
+# drawings
+if [ "$DRAWINGS" != "" ]; then
+if [ $TERMUX_VERSION != "" ]; then
+	if [ ! -d $HOME/storage ]; then
+		termux-setup-storage
+	fi
+	mkdir -p /storage/emulated/0/DCIM/drawings
+	curl -o '/storage/emulated/0/DCIM/drawings/78(.png' -L https://github.com/UlyssesZh/drawings/raw/refs/heads/master/78%28/78%28.png
+	curl -o '/storage/emulated/0/DCIM/drawings/78(.jpg' -L https://github.com/UlyssesZh/drawings/raw/refs/heads/master/78%28/78%28.jpg
+	curl -o '/storage/emulated/0/DCIM/drawings/pink_blocks.png' -L https://github.com/UlyssesZh/drawings/raw/refs/heads/master/pink_blocks/pink_blocks.png
+else
+	mkdir -p $HOME/Pictures
+	git clone https://github.com/UlyssesZh/drawings.git $HOME/Pictures/drawings
 fi
 fi

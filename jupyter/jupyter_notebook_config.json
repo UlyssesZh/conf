@@ -3,7 +3,7 @@
 		"allow_remote_access": true,
 		"allow_root": true,
 		"ip": "0.0.0.0",
-		"notebook_dir": "/home/ulysses/notebooks",
+		"notebook_dir": "/home/ulysses/pynb",
 		"open_browser": false,
 		"token": ""
 	}
