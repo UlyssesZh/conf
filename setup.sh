@@ -113,7 +113,7 @@ fi
 echo "#!/usr/bin/env bash\ncd \$HOME/.local/share/plum\nrime_dir=$rime_dir ./rime-install \$@" > $HOME/.local/bin/rime-install
 chmod +x $HOME/.local/bin/rime-install
 git clone https://github.com/rime/plum.git $HOME/.local/share/plum
-rime_dir=$rime_dir rime-install --select :all UlyssesZh/rime-config/packages.conf
+rime_dir=$rime_dir rime-install UlyssesZh/rime-config/all-packages.conf
 curl -o $rime_dir/default.custom.yaml -L https://github.com/UlyssesZh/rime-config/raw/refs/heads/master/default.custom.yaml
 curl -o $rime_dir/luna_pinyin.custom.yaml -L https://github.com/UlyssesZh/rime-config/raw/refs/heads/master/luna_pinyin.custom.yaml
 if [ "$TERMUX_VERSION" != "" ]; then
@@ -128,7 +128,11 @@ fi
 if [ "$TERMUX" != "" ] && [ "$TERMUX_VERSION" != "" ]; then
 termux-change-repo
 pkg upgrade
-pkg install git gh vim tree
+pkg install git gh vim tree atuin
+atuin import bash
+if [ -f $HOME/.zsh_history ]; then
+	atuin import zsh
+fi
 gh extension install vilmibm/gh-user-status
 if [ ! -d $HOME/storage ]; then
 	termux-setup-storage
@@ -141,6 +145,7 @@ if ! command -v rish &>/dev/null && [ -d "/storage/emulated/0/ulysses/rish" ]; t
 	install -m 700 /storage/emulated/0/ulysses/rish/rish $HOME/.local/bin/rish
 	install -m 400 /storage/emulated/0/ulysses/rish/rish_shizuku.dex $HOME/.local/share/rish/rish_shizuku.dex
 	sed -i 's|^BASEDIR=.*|BASEDIR=$HOME/.local/share/rish|' $HOME/.local/bin/rish
+	sed -i 's/RISH_APPLICATION_ID="PKG"/RISH_APPLICATION_ID=com.termux/' $HOME/.local/bin/rish
 fi
 fi
 
@@ -154,6 +159,11 @@ if [ $TERMUX_VERSION != "" ]; then
 	curl -o '/storage/emulated/0/DCIM/drawings/78(.png' -L https://github.com/UlyssesZh/drawings/raw/refs/heads/master/78%28/78%28.png
 	curl -o '/storage/emulated/0/DCIM/drawings/78(.jpg' -L https://github.com/UlyssesZh/drawings/raw/refs/heads/master/78%28/78%28.jpg
 	curl -o '/storage/emulated/0/DCIM/drawings/pink_blocks.png' -L https://github.com/UlyssesZh/drawings/raw/refs/heads/master/pink_blocks/pink_blocks.png
+	mkdir -p '/storage/emulated/0/Notifications/ulysses-ringtones'
+	curl -o /storage/emulated/0/Notifications/ulysses-ringtones/6.ogg -L https://github.com/UlyssesZh/ringtones/raw/refs/heads/gh-action-output/build/6.ogg
+	curl -o /storage/emulated/0/Notifications/ulysses-ringtones/42.ogg -L https://github.com/UlyssesZh/ringtones/raw/refs/heads/gh-action-output/build/42.ogg
+	curl -o /storage/emulated/0/Notifications/ulysses-ringtones/255.ogg -L https://github.com/UlyssesZh/ringtones/raw/refs/heads/gh-action-output/build/255.ogg
+	curl -o /storage/emulated/0/Notifications/ulysses-ringtones/1108.ogg -L https://github.com/UlyssesZh/ringtones/raw/refs/heads/gh-action-output/build/1108.ogg
 else
 	mkdir -p $HOME/Pictures
 	git clone https://github.com/UlyssesZh/drawings.git $HOME/Pictures/drawings
