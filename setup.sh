@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 https_proxy_temp=$https_proxy
 
@@ -110,7 +110,7 @@ fi
 if [ ! -d $rime_dir ]; then
 	mkdir -p $rime_dir
 fi
-echo "#!/usr/bin/env bash\ncd \$HOME/.local/share/plum\nrime_dir=$rime_dir ./rime-install \$@" > $HOME/.local/bin/rime-install
+echo "#!/usr/bin/env bash"$'\n'"cd \$HOME/.local/share/plum"$'\n'"rime_dir=$rime_dir ./rime-install \"\$@\"" > $HOME/.local/bin/rime-install
 chmod +x $HOME/.local/bin/rime-install
 git clone https://github.com/rime/plum.git $HOME/.local/share/plum
 rime_dir=$rime_dir rime-install UlyssesZh/rime-config/all-packages.conf
