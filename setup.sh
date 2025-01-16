@@ -50,7 +50,7 @@ fi
 # cheat
 if [ "$CHEAT" != "" ]; then
 if command -v cheat &>/dev/null; then
-	mkdir -p ~/.config/cheat/cheatsheets
+	mkdir -p ~/.config/cheat/cheatsheets/personal
 	cp cheat/conf.yml ~/.config/cheat/
 	git clone https://github.com/cheat/cheatsheets.git ~/.config/cheat/cheatsheets/community
 fi
@@ -168,4 +168,11 @@ else
 	mkdir -p $HOME/Pictures
 	git clone https://github.com/UlyssesZh/drawings.git $HOME/Pictures/drawings
 fi
+fi
+
+# mpv
+if [ "$MPV" != "" ]; then
+	mkdir -p ~/.config/mpv/scripts
+	cp mpv/* ~/.config/mpv
+	curl -o ~/.config/mpv/scripts/bdanmaku.lua -L https://raw.githubusercontent.com/UlyssesZh/bdanmaku/refs/heads/master/bdanmaku.lua
 fi
