@@ -42,6 +42,7 @@ if command -v zsh &>/dev/null; then
 	fi
 	sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
 	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+	git clone https://github.com/chisui/zsh-nix-shell.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/nix-shell
 	curl -o ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/ulyssesys.zsh-theme -L https://github.com/UlyssesZh/ulyssesys/raw/master/ulyssesys.zsh-theme
 	cp oh-my-zsh/.zshrc ~
 fi
