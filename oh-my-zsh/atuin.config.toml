@@ -1,0 +1,9 @@
+filter_mode_shell_up_key_binding = "session"
+style = "compact"
+enter_accept = true
+
+[stats]
+common_prefix = ["sudo", "steam-run", "strace"]
+
+[sync]
+records = true

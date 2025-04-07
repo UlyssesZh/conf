@@ -2,6 +2,33 @@
 
 https_proxy_temp=$https_proxy
 
+# termux
+if [ "$TERMUX" != "" ] && [ "$TERMUX_VERSION" != "" ]; then
+termux-change-repo
+pkg upgrade
+pkg install git gh vim tree atuin
+atuin import bash
+if [ -f $HOME/.zsh_history ]; then
+	atuin import zsh
+fi
+gh extension install vilmibm/gh-user-status
+if [ ! -d $HOME/storage ]; then
+	termux-setup-storage
+fi
+sed -i 's/# *allow-external-apps = true/allow-external-apps = true/' $HOME/.termux/termux.properties
+sed -i "s|# *extra-keys = \[\['ESC','/','-'|extra-keys = [['ESC','ENTER','BKSP'|" $HOME/.termux/termux.properties
+sed -i "s|# *\['TAB','CTRL'|              \['TAB','CTRL'|" $HOME/.termux/termux.properties
+curl -o $HOME/.termux/colors.properties -L https://github.com/termux/termux-styling/raw/refs/heads/master/app/src/main/assets/colors/base16-google-light.properties
+curl -o $HOME/.termux/font.ttf -L https://github.com/termux/termux-styling/raw/refs/heads/master/app/src/main/assets/fonts/JetBrains-Mono.ttf
+if ! command -v rish &>/dev/null && [ -d "/storage/emulated/0/ulysses/rish" ]; then
+	mkdir -p $HOME/.local/bin $HOME/.local/share/rish
+	install -m 700 /storage/emulated/0/ulysses/rish/rish $HOME/.local/bin/rish
+	install -m 400 /storage/emulated/0/ulysses/rish/rish_shizuku.dex $HOME/.local/share/rish/rish_shizuku.dex
+	sed -i 's|^BASEDIR=.*|BASEDIR=$HOME/.local/share/rish|' $HOME/.local/bin/rish
+	sed -i 's/RISH_APPLICATION_ID="PKG"/RISH_APPLICATION_ID=com.termux/' $HOME/.local/bin/rish
+fi
+fi
+
 # scripts
 if [ "$SCRIPTS" != "" ]; then
 	cp -r scripts $HOME
@@ -44,7 +71,9 @@ if command -v zsh &>/dev/null; then
 	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 	git clone https://github.com/chisui/zsh-nix-shell.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/nix-shell
 	curl -o ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/ulyssesys.zsh-theme -L https://github.com/UlyssesZh/ulyssesys/raw/master/ulyssesys.zsh-theme
-	cp oh-my-zsh/.zshrc ~
+	mkdir -p ~/.config/atuin
+	cp oh-my-zsh/atuin.config.toml ~/.config/atuin/config.toml
+	cp oh-my-zsh/zshrc ~/.zshrc
 fi
 fi
 
@@ -62,7 +91,7 @@ if [ "$OHMYTMUX" != "" ]; then
 if command -v tmux &>/dev/null; then
 	git clone https://github.com/gpakosz/.tmux.git ~/.tmux
 	ln -s -f ~/.tmux/.tmux.conf ~/.tmux.conf
-	cp oh-my-tmux/.tmux.conf.local ~
+	cp oh-my-tmux/tmux.conf.local ~/.tmux.conf.local
 fi
 fi
 
@@ -122,31 +151,6 @@ if [ "$TERMUX_VERSION" != "" ]; then
 	curl -o $rime_dir/tongwenfeng.trime.custom.yaml -L https://github.com/UlyssesZh/rime-config/raw/refs/heads/master/tongwenfeng.trime.custom.yaml
 else
 	curl -o $rime_dir/ibus_rime.custom.yaml -L https://github.com/UlyssesZh/rime-config/raw/refs/heads/master/ibus_rime.custom.yaml
-fi
-fi
-
-# termux
-if [ "$TERMUX" != "" ] && [ "$TERMUX_VERSION" != "" ]; then
-termux-change-repo
-pkg upgrade
-pkg install git gh vim tree atuin
-atuin import bash
-if [ -f $HOME/.zsh_history ]; then
-	atuin import zsh
-fi
-gh extension install vilmibm/gh-user-status
-if [ ! -d $HOME/storage ]; then
-	termux-setup-storage
-fi
-sed -i 's/#allow-external-apps = true/allow-external-apps = true/' $HOME/.termux/termux.properties
-curl -o $HOME/.termux/colors.properties -L https://github.com/termux/termux-styling/raw/refs/heads/master/app/src/main/assets/colors/base16-google-light.properties
-curl -o $HOME/.termux/font.ttf -L https://github.com/termux/termux-styling/raw/refs/heads/master/app/src/main/assets/fonts/JetBrains-Mono.ttf
-if ! command -v rish &>/dev/null && [ -d "/storage/emulated/0/ulysses/rish" ]; then
-	mkdir -p $HOME/.local/bin $HOME/.local/share/rish
-	install -m 700 /storage/emulated/0/ulysses/rish/rish $HOME/.local/bin/rish
-	install -m 400 /storage/emulated/0/ulysses/rish/rish_shizuku.dex $HOME/.local/share/rish/rish_shizuku.dex
-	sed -i 's|^BASEDIR=.*|BASEDIR=$HOME/.local/share/rish|' $HOME/.local/bin/rish
-	sed -i 's/RISH_APPLICATION_ID="PKG"/RISH_APPLICATION_ID=com.termux/' $HOME/.local/bin/rish
 fi
 fi
 
