@@ -143,7 +143,7 @@ fi
 echo "#!/usr/bin/env bash"$'\n'"cd \$HOME/.local/share/plum"$'\n'"rime_dir=$rime_dir ./rime-install \"\$@\"" > $HOME/.local/bin/rime-install
 chmod +x $HOME/.local/bin/rime-install
 git clone https://github.com/rime/plum.git $HOME/.local/share/plum
-rime_dir=$rime_dir rime-install UlyssesZh/rime-config/all-packages.conf
+rime_dir=$rime_dir $HOME/.local/bin/rime-install UlyssesZh/rime-config/all-packages.conf
 curl -o $rime_dir/default.custom.yaml -L https://github.com/UlyssesZh/rime-config/raw/refs/heads/master/default.custom.yaml
 curl -o $rime_dir/luna_pinyin.custom.yaml -L https://github.com/UlyssesZh/rime-config/raw/refs/heads/master/luna_pinyin.custom.yaml
 if [ "$TERMUX_VERSION" != "" ]; then
