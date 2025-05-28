@@ -1,0 +1,173 @@
+{
+	"workbench.colorTheme": "Quiet Light",
+	"editor.fontFamily": "'JetBrains Mono', 'Droid Sans Mono', 'monospace', monospace",
+	"editor.renderWhitespace": "all",
+	"editor.multiCursorModifier": "ctrlCmd",
+	"editor.fontLigatures": true,
+	"editor.tabSize": 2,
+	"editor.indentSize": "tabSize",
+	"github.copilot.enable": {
+		"*": true,
+		"plaintext": "true",
+		"markdown": "true",
+		"scminput": "true",
+		"csv": false
+	},
+	"latex-workshop.latex.tools": [
+		{
+			"name": "pdflatex",
+			"command": "pdflatex",
+			"args": [
+				"-synctex=1",
+				"-interaction=nonstopmode",
+				"-file-line-error",
+				"%DOC%"
+			],
+			"env": {}
+		},
+		{
+			"name": "bibtex",
+			"command": "bibtex",
+			"args": [
+				"%DOCFILE%"
+			],
+			"env": {}
+		},
+		{
+			"name": "biber",
+			"command": "biber",
+			"args": [
+				"%DOCFILE%",
+				"--output-directory=%OUTDIR%"
+			],
+			"env": {}
+		},
+		{
+			"name": "pdflatex",
+			"command": "pdflatex",
+			"args": [
+				"-synctex=1",
+				"-interaction=nonstopmode",
+				"-file-line-error",
+				"-shell-escape",
+				"%DOC%"
+			]
+		},
+		{
+			"name": "xelatex",
+			"command": "xelatex",
+			"args": [
+				"-synctex=1",
+				"-interaction=nonstopmode",
+				"-file-line-error",
+				"-shell-escape",
+				"%DOC%"
+			],
+			"env": {}
+		},
+		{
+			"name": "lualatex",
+			"command": "lualatex",
+			"args": [
+				"-synctex=1",
+				"-interaction=nonstopmode",
+				"-file-line-error",
+				"-shell-escape",
+				"%DOC%"
+			]
+		}
+	],
+	"latex-workshop.latex.recipes": [
+		{
+			"name": "pdflatex",
+			"tools": [
+				"pdflatex"
+			]
+		},
+		{
+			"name": "xelatex",
+			"tools": [
+				"xelatex"
+			]
+		},
+		{
+			"name": "lualatex",
+			"tools": [
+				"lualatex"
+			]
+		},
+		{
+			"name": "xelatex -> bibtex -> xelatex * 2",
+			"tools": [
+				"xelatex",
+				"bibtex",
+				"xelatex",
+				"xelatex"
+			]
+		},
+		{
+			"name": "pdflatex -> bibtex -> pdflatex * 2",
+			"tools": [
+				"pdflatex",
+				"bibtex",
+				"pdflatex",
+				"pdflatex"
+			]
+		},
+		{
+			"name": "pdflatex",
+			"tools": [
+				"pdflatex"
+			]
+		}
+	],
+	"workbench.iconTheme": "material-icon-theme",
+	"editor.insertSpaces": false,
+	"redhat.telemetry.enabled": false,
+	"keyboard.dispatch": "keyCode", // setxkbmap
+	"vscord.app.name": "VSCodium",
+	"vscord.status.problems.enabled": false,
+	"vscord.status.showElapsedTime": false,
+	"github.copilot.chat.welcomeMessage": "never",
+	"workbench.startupEditor": "none",
+	"latex-workshop.intellisense.atSuggestion.trigger.latex": "",
+	"vscord.status.idle.disconnectOnIdle": true,
+	"latex-workshop.latex.recipe.default": "lastUsed",
+	"github.copilot.editor.enableCodeActions": false,
+	"vscord.status.idle.resetElapsedTime": true,
+	"github.copilot.editor.enableAutoCompletions": true,
+	"latex-workshop.view.outline.sync.viewer": true,
+	"latex-workshop.view.pdf.external.viewer.command": "sioyek",
+	"latex-workshop.view.pdf.viewer": "external",
+	"latex-workshop.view.pdf.external.synctex.args": [
+		"--inverse-search",
+		"code -r -g \"%1:%2\"",
+		"--forward-search-file",
+		"%TEX%",
+		"--forward-search-line",
+		"%LINE%",
+		"--reuse-window",
+		"%PDF%"
+	],
+	"latex-workshop.view.pdf.external.synctex.command": "sioyek",
+	"latex-workshop.view.pdf.external.viewer.args": [
+		"--inverse-search",
+		"code -r -g \"%1:%2\"",
+		"%PDF%"
+	],
+	"codeium.enableConfig": {
+		"*": true,
+		"markdown": true
+	},
+	"extensions.autoCheckUpdates": false,
+	"extensions.autoUpdate": false,
+	"update.mode": "none",
+	"githubPullRequests.pullBranch": "never",
+	"window.titleBarStyle": "native",
+	"window.customTitleBarVisibility": "never",
+	"workbench.editorAssociations": {
+		"{hexdiff}:/**/*.*": "hexEditor.hexedit",
+		"*.svg": "default"
+	},
+	"workbench.editor.enablePreview": false
+}

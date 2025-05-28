@@ -4,29 +4,29 @@ https_proxy_temp=$https_proxy
 
 # termux
 if [ "$TERMUX" != "" ] && [ "$TERMUX_VERSION" != "" ]; then
-termux-change-repo
-pkg upgrade
-pkg install git gh vim tree atuin
-atuin import bash
-if [ -f $HOME/.zsh_history ]; then
-	atuin import zsh
-fi
-gh extension install vilmibm/gh-user-status
-if [ ! -d $HOME/storage ]; then
-	termux-setup-storage
-fi
-sed -i 's/# *allow-external-apps = true/allow-external-apps = true/' $HOME/.termux/termux.properties
-sed -i "s|# *extra-keys = \[\['ESC','/','-'|extra-keys = [['ESC','ENTER','BKSP'|" $HOME/.termux/termux.properties
-sed -i "s|# *\['TAB','CTRL'|              \['TAB','CTRL'|" $HOME/.termux/termux.properties
-curl -o $HOME/.termux/colors.properties -L https://github.com/termux/termux-styling/raw/refs/heads/master/app/src/main/assets/colors/base16-google-light.properties
-curl -o $HOME/.termux/font.ttf -L https://github.com/termux/termux-styling/raw/refs/heads/master/app/src/main/assets/fonts/JetBrains-Mono.ttf
-if ! command -v rish &>/dev/null && [ -d "/storage/emulated/0/ulysses/rish" ]; then
-	mkdir -p $HOME/.local/bin $HOME/.local/share/rish
-	install -m 700 /storage/emulated/0/ulysses/rish/rish $HOME/.local/bin/rish
-	install -m 400 /storage/emulated/0/ulysses/rish/rish_shizuku.dex $HOME/.local/share/rish/rish_shizuku.dex
-	sed -i 's|^BASEDIR=.*|BASEDIR=$HOME/.local/share/rish|' $HOME/.local/bin/rish
-	sed -i 's/RISH_APPLICATION_ID="PKG"/RISH_APPLICATION_ID=com.termux/' $HOME/.local/bin/rish
-fi
+	termux-change-repo
+	pkg upgrade
+	pkg install git gh vim tree atuin
+	atuin import bash
+	if [ -f $HOME/.zsh_history ]; then
+		atuin import zsh
+	fi
+	gh extension install vilmibm/gh-user-status
+	if [ ! -d $HOME/storage ]; then
+		termux-setup-storage
+	fi
+	sed -i 's/# *allow-external-apps = true/allow-external-apps = true/' $HOME/.termux/termux.properties
+	sed -i "s|# *extra-keys = \[\['ESC','/','-'|extra-keys = [['ESC','ENTER','BKSP'|" $HOME/.termux/termux.properties
+	sed -i "s|# *\['TAB','CTRL'|              \['TAB','CTRL'|" $HOME/.termux/termux.properties
+	curl -o $HOME/.termux/colors.properties -L https://github.com/termux/termux-styling/raw/refs/heads/master/app/src/main/assets/colors/base16-google-light.properties
+	curl -o $HOME/.termux/font.ttf -L https://github.com/termux/termux-styling/raw/refs/heads/master/app/src/main/assets/fonts/JetBrains-Mono.ttf
+	if ! command -v rish &>/dev/null && [ -d "/storage/emulated/0/ulysses/rish" ]; then
+		mkdir -p $HOME/.local/bin $HOME/.local/share/rish
+		install -m 700 /storage/emulated/0/ulysses/rish/rish $HOME/.local/bin/rish
+		install -m 400 /storage/emulated/0/ulysses/rish/rish_shizuku.dex $HOME/.local/share/rish/rish_shizuku.dex
+		sed -i 's|^BASEDIR=.*|BASEDIR=$HOME/.local/share/rish|' $HOME/.local/bin/rish
+		sed -i 's/RISH_APPLICATION_ID="PKG"/RISH_APPLICATION_ID=com.termux/' $HOME/.local/bin/rish
+	fi
 fi
 
 # scripts
@@ -38,33 +38,29 @@ fi
 
 # git
 if [ "$GIT" != "" ]; then
-git config --global user.email "UlyssesZhan@gmail.com"
-git config --global user.name "Ulysses Zhan"
-git config --global credential.helper store
+	git config --global user.email "UlyssesZhan@gmail.com"
+	git config --global user.name "Ulysses Zhan"
+	git config --global credential.helper store
 fi
 
 # Install yay
 if [ "$YAY" != "" ]; then
-if !( command -v yay &>/dev/null ); then
 	git clone https://aur.archlinux.org/yay-bin.git
-	cd yay
+	cd yay-bin
 	makepkg -si
 	cd ..
-	rm -rf yay
-fi
+	rm -rf yay-bin
 fi
 
 # oh-my-zsh
 if [ "$OHMYZSH" != "" ]; then
-if command -v zsh &>/dev/null; then
-	if [ $SHELL != $(which zsh) ]; then
-		if [ "$TERMUX_VERSION" != "" ]; then
-			if ! command -v zsh &>/dev/null; then
-				pkg install zsh
+	if command -v zsh &>/dev/null; then
+		if [ $SHELL != $(which zsh) ]; then
+			if [ "$TERMUX_VERSION" != "" ]; then
+				chsh -s zsh
+			else
+				chsh -s $(which zsh)
 			fi
-			chsh -s zsh
-		else
-			chsh -s $(which zsh)
 		fi
 	fi
 	sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
@@ -75,29 +71,23 @@ if command -v zsh &>/dev/null; then
 	cp oh-my-zsh/atuin.config.toml ~/.config/atuin/config.toml
 	cp oh-my-zsh/zshrc ~/.zshrc
 fi
-fi
 
 # cheat
 if [ "$CHEAT" != "" ]; then
-if command -v cheat &>/dev/null; then
 	mkdir -p ~/.config/cheat/cheatsheets/personal
 	cp cheat/conf.yml ~/.config/cheat/
 	git clone https://github.com/cheat/cheatsheets.git ~/.config/cheat/cheatsheets/community
 fi
-fi
 
 # tmux
 if [ "$OHMYTMUX" != "" ]; then
-if command -v tmux &>/dev/null; then
 	git clone https://github.com/gpakosz/.tmux.git ~/.tmux
 	ln -s -f ~/.tmux/.tmux.conf ~/.tmux.conf
 	cp oh-my-tmux/tmux.conf.local ~/.tmux.conf.local
 fi
-fi
 
 # jupyter
 if [ "$JUPYTER" != "" ]; then
-if command -v jupyter &>/dev/null; then
 	mkdir -p $HOME/pynb
 	mkdir -p $HOME/.jupyter
 	cp jupyter/jupyter_notebook_config.json $HOME/.jupyter
@@ -110,7 +100,6 @@ if command -v jupyter &>/dev/null; then
 		git clone https://github.com/WolframResearch/WolframLanguageForJupyter.git ~/.local/WolframLanguageForJupyter
 		~/.local/WolframLanguageForJupyter/.configure-jupyter.wls add
 	fi
-fi
 fi
 
 # tlmgr
@@ -180,4 +169,12 @@ if [ "$MPV" != "" ]; then
 	mkdir -p ~/.config/mpv/scripts
 	cp mpv/* ~/.config/mpv
 	curl -o ~/.config/mpv/scripts/bdanmaku.lua -L https://raw.githubusercontent.com/UlyssesZh/bdanmaku/refs/heads/master/bdanmaku.lua
+fi
+
+# vscode
+if [ "$VSCODE" != "" ]; then
+	mkdir -p ~/.config/Code/User
+	cp vscode/{settings,keybindings}.json ~/.config/Code/User
+	mkdir -p ~/.config/VSCodium/User
+	ln -s ~/.config/Code/User/{settings,keybindings}.json -t ~/.config/VSCodium/User
 fi
