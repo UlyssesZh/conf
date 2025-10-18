@@ -178,3 +178,10 @@ if [ "$VSCODE" != "" ]; then
 	mkdir -p ~/.config/VSCodium/User
 	ln -s ~/.config/Code/User/{settings,keybindings}.json -t ~/.config/VSCodium/User
 fi
+
+# ghostty
+if [ "$GHOSTTY" != "" ]; then
+	mkdir -p ~/.config/ghostty
+	cp ghostty/config ~/.config/ghostty
+	cp ghostty/xdg-terminals.list ~/.config
+fi

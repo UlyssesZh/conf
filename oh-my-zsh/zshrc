@@ -31,17 +31,28 @@ export EDITOR=vim
 # Added by the user
 #. ~/.local/share/rtx/plugins/go/set-env.zsh
 export PATH=$PATH:$HOME/.cabal/bin:$HOME/.local/bin:$HOME/scripts
-command -v mise &> /dev/null && alias rtx=mise || true
-command -v rtx &> /dev/null && eval "$(rtx activate zsh)" || true
-command -v thefuck &> /dev/null && eval "$(thefuck --alias)" || true
-command -v ng &> /dev/null && source <(ng completion script) || true
-command -v colormake &> /dev/null && alias make=colormake || true
+
+if command -v mise &> /dev/null; then; alias rtx=mise; fi
+if command -v colormake &> /dev/null; then; alias make=colormake; fi
+if command -v doas &> /dev/null; then; alias sudo=doas; fi
+
+if command -v codium &> /dev/null && ! command -v code &> /dev/null; then
+	alias code=codium
+elif command -v code &> /dev/null && ! command -v codium &> /dev/null; then
+	alias codium=code
+fi
+
+if command -v rtx &> /dev/null; then; eval "$(rtx activate zsh)"; fi
+if command -v thefuck &> /dev/null; then; eval "$(thefuck --alias)"; fi
+if command -v ng &> /dev/null; then; eval "$(ng completion script)"; fi
+if command -v atuin &> /dev/null; then; eval "$(atuin init zsh)"; fi
+if command -v zoxide &> /dev/null; then
+	eval "$(zoxide init zsh --cmd cd)"
+	export _ZO_EXCLUDE_DIRS=$_ZO_EXCLUDE_DIRS:/nix
+fi
+
+if [ -f "$HOME/.ghcup/env" ]; then; source "$HOME/.ghcup/env"; fi
 
 autoload -Uz compinit && compinit
 
-[ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" || true # ghcup-env
-
-command -v doas &> /dev/null && alias sudo=doas || true
-command -v atuin &> /dev/null  && eval "$(atuin init zsh)" || true
-
-[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local" || true
+if [ -f "$HOME/.zshrc.local" ]; then; source "$HOME/.zshrc.local"; fi

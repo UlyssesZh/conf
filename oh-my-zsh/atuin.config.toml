@@ -1,6 +1,7 @@
 filter_mode_shell_up_key_binding = "session"
 style = "compact"
 enter_accept = true
+inline_height = 0 # https://forum.atuin.sh/t/screen-clearing-after-history-selection/831/2?u=ulysseszhan
 
 [stats]
 common_prefix = ["sudo", "steam-run", "strace"]
