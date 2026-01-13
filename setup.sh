@@ -66,6 +66,7 @@ if [ "$OHMYZSH" != "" ]; then
 	sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
 	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 	git clone https://github.com/chisui/zsh-nix-shell.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/nix-shell
+	git clone -b raise-at-click https://github.com/UlyssesZh/zsh-notify.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/notify
 	curl -o ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/ulyssesys.zsh-theme -L https://github.com/UlyssesZh/ulyssesys/raw/master/ulyssesys.zsh-theme
 	mkdir -p ~/.config/atuin
 	cp oh-my-zsh/atuin.config.toml ~/.config/atuin/config.toml
@@ -184,4 +185,10 @@ if [ "$GHOSTTY" != "" ]; then
 	mkdir -p ~/.config/ghostty
 	cp ghostty/config ~/.config/ghostty
 	cp ghostty/xdg-terminals.list ~/.config
+fi
+
+# styluslabs write
+if [ "$WRITE" != "" ]; then
+	mkdir -p ~/.config/styluslabs
+	cp styluslabs/write.xml ~/.config/styluslabs
 fi
