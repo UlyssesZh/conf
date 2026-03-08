@@ -2,6 +2,10 @@
 
 https_proxy_temp=$https_proxy
 
+set -a
+source secrets.decrypted
+set +a
+
 # termux
 if [ "$TERMUX" != "" ] && [ "$TERMUX_VERSION" != "" ]; then
 	termux-change-repo
@@ -68,9 +72,12 @@ if [ "$OHMYZSH" != "" ]; then
 	git clone https://github.com/chisui/zsh-nix-shell.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/nix-shell
 	git clone -b raise-at-click https://github.com/UlyssesZh/zsh-notify.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/notify
 	curl -o ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/ulyssesys.zsh-theme -L https://github.com/UlyssesZh/ulyssesys/raw/master/ulyssesys.zsh-theme
-	mkdir -p ~/.config/atuin
-	cp oh-my-zsh/atuin.config.toml ~/.config/atuin/config.toml
 	cp oh-my-zsh/zshrc ~/.zshrc
+fi
+
+if [ "$ATUIN" != "" ]; then
+	mkdir -p ~/.config/atuin
+	sed "s/@self_host_domain@/$SELF_HOST_DOMAIN/g" atuin/config.toml > ~/.config/atuin/config.toml
 fi
 
 # cheat
