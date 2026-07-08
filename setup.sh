@@ -131,6 +131,8 @@ if [ "$RIME" != "" ]; then
 mkdir -p $HOME/.local/bin $HOME/.local/share
 if [ "$TERMUX_VERSION" != "" ]; then
 	rime_dir=/storage/emulated/0/ulysses/trime
+elif [ "$(uname -s)" == Darwin ]; then
+	rime_dir=$HOME/Library/Rime
 else
 	rime_dir=$HOME/.config/ibus/rime
 fi
