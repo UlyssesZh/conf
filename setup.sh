@@ -45,6 +45,7 @@ if [ "$GIT" != "" ]; then
 	git config --global user.email "UlyssesZhan@gmail.com"
 	git config --global user.name "Ulysses Zhan"
 	git config --global credential.helper store
+	git config --global init.defaultBranch master
 fi
 
 # Install yay
