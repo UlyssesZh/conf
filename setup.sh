@@ -10,7 +10,7 @@ set +a
 if [ "$TERMUX" != "" ] && [ "$TERMUX_VERSION" != "" ]; then
 	termux-change-repo
 	pkg upgrade
-	pkg install git gh vim tree atuin
+	pkg install git gh vim tree atuin termux-services
 	atuin import bash
 	if [ -f $HOME/.zsh_history ]; then
 		atuin import zsh
@@ -31,6 +31,10 @@ if [ "$TERMUX" != "" ] && [ "$TERMUX_VERSION" != "" ]; then
 		sed -i 's|^BASEDIR=.*|BASEDIR=$HOME/.local/share/rish|' $HOME/.local/bin/rish
 		sed -i 's/RISH_APPLICATION_ID="PKG"/RISH_APPLICATION_ID=com.termux/' $HOME/.local/bin/rish
 	fi
+	mkdir -p $HOME/.termux/boot
+	cp termux/boot/service.sh $HOME/.termux/boot/service.sh
+	mkdir -p $PREFIX/var/service/zeroconf/log
+	cp termux/service/zeroconf.py $PREFIX/var/service/zeroconf/run
 fi
 
 # scripts
