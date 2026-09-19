@@ -33,6 +33,11 @@ if [ "$TERMUX" != "" ] && [ "$TERMUX_VERSION" != "" ]; then
 	fi
 	mkdir -p $HOME/.termux/boot
 	cp termux/boot/service.sh $HOME/.termux/boot/service.sh
+fi
+
+if [ "$ZEROCONF" != "" ] && [ "$TERMUX_VERSION" != "" ]; then
+	pkg install python
+	pip install zeroconf
 	mkdir -p $PREFIX/var/service/zeroconf/log
 	cp termux/service/zeroconf.py $PREFIX/var/service/zeroconf/run
 fi
