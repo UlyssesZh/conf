@@ -195,8 +195,10 @@ fi
 if [ "$VSCODE" != "" ]; then
 	mkdir -p ~/.config/Code/User
 	cp vscode/{settings,keybindings}.json ~/.config/Code/User
-	mkdir -p ~/.config/VSCodium/User
-	ln -s ~/.config/Code/User/{settings,keybindings}.json -t ~/.config/VSCodium/User
+	for code in VSCodium "Code - OSS"; do
+		mkdir -p "$HOME/.config/$code/User"
+		ln -s "$HOME/.config/Code/User"/{settings,keybindings}.json -t "$HOME/.config/$code/User"
+	done
 fi
 
 # ghostty
