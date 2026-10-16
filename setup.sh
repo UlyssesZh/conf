@@ -36,6 +36,13 @@ if [ "$TERMUX" != "" ] && [ "$TERMUX_VERSION" != "" ]; then
 fi
 
 if [ "$ZEROCONF" != "" ] && [ "$TERMUX_VERSION" != "" ]; then
+	if [ ! -f $HOME/.hostname ]; then
+		read -p "Enter your hostname (default: ulysses): " hostname
+		if [ "$hostname" == "" ]; then
+			hostname="ulysses"
+		fi
+		echo -n $hostname > $HOME/.hostname
+	fi
 	pkg install python
 	pip install zeroconf
 	mkdir -p $PREFIX/var/service/zeroconf/log
